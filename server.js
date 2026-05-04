@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
   origin: "*", // change to frontend URL in production
 }));
-app.use(express.json());
+app.use(express.json()); 
 
 /* ---------- DATABASE ---------- */
 const pool = new Pool({
