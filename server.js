@@ -1,3 +1,4 @@
+process.env.NODE_OPTIONS = "--dns-result-order=ipv4first";
 require("dotenv").config();
 console.log("🚀 SERVER STARTING...");
 
@@ -16,8 +17,12 @@ app.use(express.json());
 /* ---------- DATABASE ---------- */
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  family: 4
+  ssl: { rejectUnauthorized: false }
+});
+
+pool.query("SELECT NOW()", (err, res) => {
+  if (err) console.error("DB ERROR:", err.message);
+  else console.log("DB CONNECTED:", res.rows[0]);
 });
 
 /* ---------- HEALTH CHECK ---------- */
